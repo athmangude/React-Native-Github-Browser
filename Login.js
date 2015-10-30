@@ -34,17 +34,18 @@ var styles = StyleSheet.create({
   container: {
     backgroundColor: 'F5FCFF',
     flex: 1,
-    paddingTop: 40,
+    justifyContent: 'center',
     alignItems: 'center',
     padding: 10
   },
   logo: {
-    width: 66,
-    height: 55
+    width: 122,
+    height: 111,
   },
   heading: {
     fontSize: 30,
-    marginTop: 10
+    marginTop: 10,
+    paddingBottom: 20
   },
   input: {
     height: 50,
