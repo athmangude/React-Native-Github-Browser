@@ -11,11 +11,16 @@ var {
   StyleSheet,
   Image,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  Component
 } = React;
 
-var Login = React.createClass({
-  render: function() {
+class Login extends Component {
+  constructor(props){
+    super(props);
+  }
+
+  render() {
     return (
       <View style={styles.container}>
         <Image style={styles.logo} source={require('image!Octocat')} />
@@ -28,7 +33,7 @@ var Login = React.createClass({
       </View>
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
   container: {

@@ -10,7 +10,7 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
+  View
 } = React;
 
 var Login = require('./Login');
