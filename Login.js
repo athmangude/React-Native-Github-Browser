@@ -25,7 +25,14 @@ var Login = React.createClass({
 var styles = StyleSheet.create({
   container: {
     backgroundColor: 'F5FCFF',
-    flex: 1
+    flex: 1,
+    paddingTop: 40,
+    alignItems: 'center'
+  },
+
+  logo: {
+    width: 66,
+    height: 55
   },
 
   text: {
