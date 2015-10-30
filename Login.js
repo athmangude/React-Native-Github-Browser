@@ -2,6 +2,7 @@
 
 // Bringing React into module
 var React = require('react-native');
+var buffer = require('buffer');
 
 // Requiring React modules to be used
 var {
@@ -63,6 +64,7 @@ class Login extends Component {
   }
 
   onLoginPressed(){
+    // show activity indicator
     this.setState({showProgress: true});
 
     // make api request to Github repository search
@@ -72,6 +74,10 @@ class Login extends Component {
       console.log(results);
       this.setState({showProgress: false})
     });
+
+    var buffered = new buffer.Buffer('Testing testing cocolico');
+    console.log(buffered.toString('base64'));
+
   }
 
 
