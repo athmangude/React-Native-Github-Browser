@@ -17,6 +17,7 @@ var Login = React.createClass({
     return (
       <View style={styles.container}>
         <Image style={styles.logo} source={require('image!Octocat')} />
+        <Text style={styles.heading}>Github Browser</Text>
       </View>
     );
   }
@@ -29,14 +30,13 @@ var styles = StyleSheet.create({
     paddingTop: 40,
     alignItems: 'center'
   },
-
   logo: {
     width: 66,
     height: 55
   },
-
-  text: {
-    color: 'F0f0f0',
+  heading: {
+    fontSize: 30,
+    marginTop: 10
   }
 });
 
