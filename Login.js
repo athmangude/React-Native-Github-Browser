@@ -25,14 +25,32 @@ class Login extends Component {
       <View style={styles.container}>
         <Image style={styles.logo} source={require('image!Octocat')} />
         <Text style={styles.heading}>Github Browser</Text>
-        <TextInput style={styles.input} placeholder="Github Username" />
-        <TextInput style={styles.input} placeholder="Github Username" secureTextEntry="true" />
-        <TouchableHighlight style={styles.button}>
+        <TextInput
+          style={styles.input}
+          placeholder="Github Username"
+          onChangeText={(username) => this.setState({username: username})}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Github Username"
+          secureTextEntry="true"
+          onChangeText={(password) => this.setState({password: password})}
+        />
+        <TouchableHighlight
+          style={styles.button}
+          onPress={this.onLoginPressed.bind(this)}
+        >
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableHighlight>
       </View>
     );
   }
+
+  onLoginPressed(){
+    console.log("Attempting to login");
+  }
+
+
 }
 
 var styles = StyleSheet.create({
