@@ -36,14 +36,14 @@ class Login extends Component {
         <TextInput
           style={styles.input}
           placeholder="Github Username"
-          onChangeText={(username) => this.setState({username: username})}
+          onChangeText={(text) => this.setState({username: text})}
         />
 
         <TextInput
           style={styles.input}
           placeholder="Github Username"
           secureTextEntry="true"
-          onChangeText={(password) => this.setState({password: password})}
+          onChangeText={(secureText) => this.setState({password: secureText})}
         />
 
         <TouchableHighlight
@@ -67,16 +67,24 @@ class Login extends Component {
     // show activity indicator
     this.setState({showProgress: true});
 
+    var b = new buffer.Buffer(this.state.username +
+       ':' + this.state.password);
+    var encodedBasicAuthToken = b.toString('base64');
+
+    console.log(this.state.username, this.state.password);
+    console.log(encodedBasicAuthToken);
+
     // make api request to Github repository search
-    fetch('https://api.github.com/search/repositories?q=react').then((response) => {
+    fetch('https://api.github.com/user', {
+      headers: {
+        'Authorization' : 'Basic ' + encodedBasicAuthToken
+      }
+    }).then((response) => {
       return response.json();
     }).then((results) => {
       console.log(results);
       this.setState({showProgress: false})
     });
-
-    var buffered = new buffer.Buffer('Testing testing cocolico');
-    console.log(buffered.toString('base64'));
 
   }
 
