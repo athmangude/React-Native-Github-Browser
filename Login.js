@@ -80,12 +80,23 @@ class Login extends Component {
         'Authorization' : 'Basic ' + encodedBasicAuthToken
       }
     }).then((response) => {
+      if(response.status >= 200 && response.status <= 300){
+        return response;
+      } else if (response.status == 401) {
+        throw "Bad credentials";
+      } else {
+        throw "Unknown error";
+      }
+    }).then((response) => {
       return response.json();
     }).then((results) => {
       console.log(results);
-      this.setState({showProgress: false})
+    }).catch((error) => {
+      console.log("Login Failed " + error);
+    }).finally(() => {
+      // stop displaying the progress
+      this.setState({showProgress: false});
     });
-
   }
 
 
