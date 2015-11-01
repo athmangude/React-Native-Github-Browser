@@ -82,37 +82,14 @@ class Login extends Component {
     // show activity indicator
     this.setState({showProgress: true});
 
-    var b = new buffer.Buffer(this.state.username +
-       ':' + this.state.password);
-    var encodedBasicAuthToken = b.toString('base64');
-
-    console.log(this.state.username, this.state.password);
-    console.log(encodedBasicAuthToken);
-
-    // make api request to Github repository search
-    fetch('https://api.github.com/user', {
-      headers: {
-        'Authorization' : 'Basic ' + encodedBasicAuthToken
-      }
-    }).then((response) => {
-      if(response.status >= 200 && response.status <= 300){
-        return response;
-      } else {
-        throw {
-          badCredentials: response.status == 401,
-          unknownError: response.status != 401
-        }
-      }
-    }).then((response) => {
-      return response.json();
-    }).then((results) => {
-      this.setState({loggedIn: true});
-      console.log(results);
-    }).catch((error) => {
-      this.setState(error)
-    }).finally(() => {
-      // stop displaying the progress
-      this.setState({showProgress: false});
+    var authenticationService = require('./AuthenticationService');
+    authenticationService.login({
+      username: this.state.username,
+      password: this.state.password
+    }, (results) => {
+      this.setState(Object.assign({
+        showProgress: false
+      }, results));
     });
   }
 
