@@ -28,6 +28,19 @@ class Login extends Component {
   }
 
   render() {
+
+    var errorMessage = <View />
+
+    if (!this.state.loggedIn && this.state.badCredentials) {
+      errorMessage = <Text style={styles.error}>
+        Invalid username and password combination
+      </Text>
+    } else if (!this.state.loggedIn && this.state.unknownError) {
+      errorMessage = <Text style={styles.error}>
+        Invalid username and password combination
+      </Text>
+    }
+
     return (
       <View style={styles.container}>
         <Image style={styles.logo} source={require('image!Octocat')} />
@@ -52,6 +65,8 @@ class Login extends Component {
         >
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableHighlight>
+
+        {errorMessage}
 
         <ActivityIndicatorIOS
           animating={this.state.showProgress}
@@ -91,6 +106,7 @@ class Login extends Component {
     }).then((response) => {
       return response.json();
     }).then((results) => {
+      this.setState({loggedIn: true});
       console.log(results);
     }).catch((error) => {
       this.setState(error)
@@ -140,9 +156,12 @@ var styles = StyleSheet.create({
     fontSize: 22,
     color: 'FFF'
   },
-
   loader: {
     marginTop: 20
+  },
+  error: {
+    color: 'red',
+    paddingTop: 10
   }
 });
 
