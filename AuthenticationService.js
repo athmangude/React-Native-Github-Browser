@@ -1,6 +1,9 @@
 var buffer = require('buffer');
 var AsyncStorage = require('react-native').AsyncStorage;
 
+const authTokenKey = 'authToken';
+const userKey = 'user';
+
 class AuthenticationService {
 
   login(credentials, callback) {
@@ -27,8 +30,8 @@ class AuthenticationService {
       return response.json();
     }).then((results) => {
       AsyncStorage.multiSet([
-        ['authToken', encodedBasicAuthToken],
-        ['user', JSON.stringify(results)]
+        [authTokenKey, encodedBasicAuthToken],
+        [userKey, JSON.stringify(results)]
       ], (error) => {
         if (error) {
           throw error;
