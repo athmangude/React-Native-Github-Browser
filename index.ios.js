@@ -17,14 +17,30 @@ var Login = require('./Login');
 
 var GithubBrowser = React.createClass({
   render: function() {
-    var message = "Athman Gude is now a React Native Developer"
-    return (
-      <Login onLogin={this.onLogin} />
-    );
+    if (this.state.isLoggedIn) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcome}>You are logged In</Text>
+        </View>
+      );
+    } else {
+      return (
+        <Login onLogin={this.onLogin} />
+      );
+    }
+
   },
 
   onLogin: function() {
-    console.log("The user has logged in. Transition to home screen");
+    this.setState({
+      isLoggedIn: true
+    })
+  },
+
+  getInitialState: function () {
+    return {
+      isLoggedIn: false
+    };
   }
 });
 
