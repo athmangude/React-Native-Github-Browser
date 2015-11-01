@@ -82,17 +82,18 @@ class Login extends Component {
     }).then((response) => {
       if(response.status >= 200 && response.status <= 300){
         return response;
-      } else if (response.status == 401) {
-        throw "Bad credentials";
       } else {
-        throw "Unknown error";
+        throw {
+          badCredentials: response.status == 401,
+          unknownError: response.status != 401
+        }
       }
     }).then((response) => {
       return response.json();
     }).then((results) => {
       console.log(results);
     }).catch((error) => {
-      console.log("Login Failed " + error);
+      this.setState(error)
     }).finally(() => {
       // stop displaying the progress
       this.setState({showProgress: false});
