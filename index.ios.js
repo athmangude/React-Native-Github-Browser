@@ -19,8 +19,12 @@ var GithubBrowser = React.createClass({
   render: function() {
     var message = "Athman Gude is now a React Native Developer"
     return (
-      <Login />
+      <Login onLogin={this.onLogin} />
     );
+  },
+
+  onLogin: function() {
+    console.log("The user has logged in. Transition to home screen");
   }
 });
 

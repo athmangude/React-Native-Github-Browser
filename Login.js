@@ -90,6 +90,11 @@ class Login extends Component {
       this.setState(Object.assign({
         showProgress: false
       }, results));
+
+      if (results.loggedIn && this.props.onLogin) {
+        this.props.onLogin();
+      }
+
     });
   }
 
