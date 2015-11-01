@@ -1,4 +1,5 @@
 var buffer = require('buffer');
+var AsyncStorage = require('react-native').AsyncStorage;
 
 class AuthenticationService {
 
@@ -7,9 +8,6 @@ class AuthenticationService {
     var b = new buffer.Buffer(credentials.username +
        ':' + credentials.password);
     var encodedBasicAuthToken = b.toString('base64');
-
-    console.log(credentials.username, credentials.password);
-    console.log(encodedBasicAuthToken);
 
     // make api request to Github repository search
     fetch('https://api.github.com/user', {
@@ -28,8 +26,15 @@ class AuthenticationService {
     }).then((response) => {
       return response.json();
     }).then((results) => {
-      callback({loggedIn: true});
-      console.log(results);
+      AsyncStorage.multiSet([
+        ['authToken', encodedBasicAuthToken],
+        ['user', JSON.stringify(results)]
+      ], (error) => {
+        if (error) {
+          throw error;
+        }
+        return callback({loggedIn: true});
+      });
     }).catch((error) => {
       callback(error);
     });
