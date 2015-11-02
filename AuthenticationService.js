@@ -18,15 +18,15 @@ class AuthenticationService {
 
         var zippedObject = _.zipObject(result);
 
-        if(!zippedObject.authTokenKey) {
+        if(!zippedObject[authTokenKey]) {
           return callback();
         }
 
         var authenticationInfo = {
           header: {
-            Authorization: 'Basic' + zippedObject.authTokenKey
+            Authorization: 'Basic' + zippedObject[authTokenKey]
           },
-          user: JSON.parse(zippedObject.userKey)
+          user: JSON.parse(zippedObject[userKey])
         }
 
         return callback(null, authenticationInfo);
