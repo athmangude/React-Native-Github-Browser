@@ -9,7 +9,8 @@ var {
   View,
   Text,
   StyleSheet,
-  Component
+  Component,
+  TabBarIOS
 } = React;
 
 class AppContainer extends Component {
@@ -17,16 +18,29 @@ class AppContainer extends Component {
     super(props);
 
     this.state = {
-
+      selectedTab: 'feed'
     }
 
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Tabs Coming Soon</Text>
-      </View>
+      <TabBarIOS style={styles.container}>
+        <TabBarIOS.Item
+          title = "Feed"
+          selected = {this.state.selectedTab == 'feed'}
+          icon = {require('image!inbox')}
+          onPress = {() => this.setState({selectedTab: 'feed'})} >
+          <Text style={styles.welcome}>Feed</Text>
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          title = "Search"
+          selected = {this.state.selectedTab == 'search'}
+          icon = {require('image!search')}
+          onPress = {() => this.setState({selectedTab: 'search'})} >
+          <Text style={styles.welcome}>Search</Text>
+        </TabBarIOS.Item>
+      </TabBarIOS>
     );
   }
 }
@@ -38,6 +52,13 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+    justifyContent: 'center',
+    paddingTop: 100
   }
 });
 
