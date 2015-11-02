@@ -1,10 +1,39 @@
 var buffer = require('buffer');
 var AsyncStorage = require('react-native').AsyncStorage;
+var _ = require('lodash');
 
 const authTokenKey = 'authToken';
 const userKey = 'user';
 
 class AuthenticationService {
+
+  getAuthenticationInfo(callback) {
+    AsyncStorage.multiGet([authTokenKey, userKey], (error, result) => {
+      if (error) {
+        return callback(error);
+      } else {
+        if (!result) {
+          return callback();
+        }
+
+        var zippedObject = _.zipObject(result);
+
+        if(!zippedObject.authTokenKey) {
+          return callback();
+        }
+
+        var authenticationInfo = {
+          header: {
+            Authorization: 'Basic' + zippedObject.authTokenKey
+          },
+          user: JSON.parse(zippedObject.userKey)
+        }
+
+        return callback(null, authenticationInfo);
+
+      }
+    });
+  }
 
   login(credentials, callback) {
 

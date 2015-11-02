@@ -10,13 +10,37 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  ActivityIndicatorIOS
 } = React;
 
 var Login = require('./Login');
+var AuthenticationService = require('./AuthenticationService');
 
 var GithubBrowser = React.createClass({
+
+  componentDidMount: function() {
+    AuthenticationService.getAuthenticationInfo((error, authenticationInfo) => {
+      this.setState({
+        checkingAuthentication: false,
+        isLoggedIn: authenticationInfo != null
+      });
+    });
+  },
+
   render: function() {
+
+    if (this.state.checkingAuthentication) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicatorIOS
+            style={styles.loader}
+            animating={true}
+            size="large" />
+        </View>
+      );
+    }
+
     if (this.state.isLoggedIn) {
       return (
         <View style={styles.container}>
@@ -39,7 +63,8 @@ var GithubBrowser = React.createClass({
 
   getInitialState: function () {
     return {
-      isLoggedIn: false
+      isLoggedIn: false,
+      checkingAuthentication: true
     };
   }
 });
